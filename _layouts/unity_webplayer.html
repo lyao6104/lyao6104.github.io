@@ -27,10 +27,10 @@ gameName: Temp
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
     <link rel="shortcut icon" href="TemplateData/favicon.ico">
     <link rel="stylesheet" href="TemplateData/style.css">
-    <script src= {{ page.gameName }} + "/TemplateData/UnityProgress.js"></script>
-    <script src= {{ page.gameName }} + "/Build/UnityLoader.js"></script>
+    <script src= {{ page.gameName | inspect }} + "/TemplateData/UnityProgress.js"></script>
+    <script src= {{ page.gameName | inspect }} + "/Build/UnityLoader.js"></script>
     <script>
-      var unityInstance = UnityLoader.instantiate("unityContainer", {{ page.gameName }} + "/Build/" + {{ page.gameName }} + ".json", {onProgress: UnityProgress});
+      var unityInstance = UnityLoader.instantiate("unityContainer", {{ page.gameName | inspect }} + "/Build/" + {{ page.gameName | inspect }} + ".json", {onProgress: UnityProgress});
     </script>
   </head>
   <body>
