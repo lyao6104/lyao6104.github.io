@@ -1,5 +1,5 @@
 ---
-gameName: Temp 
+gameName: Temp
 ---
 
 <!-- Modified from the default layout for the Cayman theme -->
@@ -25,12 +25,12 @@ gameName: Temp
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <link rel="stylesheet" href="{{ '/assets/css/style.css?v=' | append: site.github.build_revision | relative_url }}">
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-    <link rel="shortcut icon" href="{{ page.gameName | append: "/TemplateData/favicon.ico" }}">
-    <link rel="stylesheet" href="{{ page.gameName | append: "/TemplateData/style.css" }}">
-    <script src="{{ page.gameName | append: "/TemplateData/UnityProgress.js" }}"></script>
-    <script src="{{ page.gameName | append: "/Build/UnityLoader.js" }}"></script>
+    <link rel="shortcut icon" href="{{ layout.gameName | append: "/TemplateData/favicon.ico" }}">
+    <link rel="stylesheet" href="{{ layout.gameName | append: "/TemplateData/style.css" }}">
+    <script src="{{ layout.gameName | append: "/TemplateData/UnityProgress.js" }}"></script>
+    <script src="{{ layout.gameName | append: "/Build/UnityLoader.js" }}"></script>
     <script>
-      var unityInstance = UnityLoader.instantiate("unityContainer", "{{ page.gameName }}" + "/Build/" + "{{ page.gameName}}" + ".json", {onProgress: UnityProgress});
+      var unityInstance = UnityLoader.instantiate("unityContainer", "{{ layout.gameName }}" + "/Build/" + "{{ layout.gameName}}" + ".json", {onProgress: UnityProgress});
     </script>
   </head>
   <body>
