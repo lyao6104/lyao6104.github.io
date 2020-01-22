@@ -25,10 +25,10 @@ gameName: Temp
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <link rel="stylesheet" href="{{ '/assets/css/style.css?v=' | append: site.github.build_revision | relative_url }}">
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-    <link rel="shortcut icon" href= {{ page.gameName }} + "TemplateData/favicon.ico">
-    <link rel="stylesheet" href= {{ page.gameName }} + "TemplateData/style.css">
-    <script src= {{ page.gameName }} + "/TemplateData/UnityProgress.js"></script>
-    <script src= {{ page.gameName }} + "/Build/UnityLoader.js"></script>
+    <link rel="shortcut icon" href={{ page.gameName | inspect | smartify }} + "TemplateData/favicon.ico">
+    <link rel="stylesheet" href={{ page.gameName | inspect | smartify }} + "TemplateData/style.css">
+    <script src={{ page.gameName | inspect | smartify }} + "/TemplateData/UnityProgress.js"></script>
+    <script src={{ page.gameName | inspect | smartify }} + "/Build/UnityLoader.js"></script>
     <script>
       var unityInstance = UnityLoader.instantiate("unityContainer", {{ page.gameName | inspect | smartify }} + "/Build/" + {{ page.gameName | inspect | smartify }} + ".json", {onProgress: UnityProgress});
     </script>
