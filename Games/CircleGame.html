@@ -1,14 +1,16 @@
 ---
 layout: unity_webplayer
+title: CircleGame
+gameName: CircleGame
 ---
 
-<div class="webgl-content">
+<div class="webgl-content" style="bottom: 300px">
+	<p class="header">{{ layout.gameName }}</p>
 	<div id="unityContainer" style="width: 960px; height: 600px"></div>
-	<p class="header">CircleGame</p>
 	<div class="template-wrap clear" style="position:relative">
 	<div class="footer">
 		<div class="webgl-logo"></div>
 		<div class="fullscreen" onclick="unityInstance.SetFullscreen(1)"></div>
-		<div class="title">CircleGame</div>
+		<div class="title">{{ layout.gameName }}</div>
 	</div>
 </div>

@@ -1,5 +1,9 @@
 <!-- Modified from the default layout for the Cayman theme -->
 
+---
+gameName: Temp 
+---
+
 <!DOCTYPE html>
 <html lang="{{ site.lang | default: "en-US" }}">
   <head>
@@ -21,13 +25,12 @@
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <link rel="stylesheet" href="{{ '/assets/css/style.css?v=' | append: site.github.build_revision | relative_url }}">
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-    <title>Unity WebGL Player | CircleGame</title>
     <link rel="shortcut icon" href="TemplateData/favicon.ico">
     <link rel="stylesheet" href="TemplateData/style.css">
-    <script src="TemplateData/UnityProgress.js"></script>
-    <script src="Build/UnityLoader.js"></script>
+    <script src= {{ page.gameName }} + "/TemplateData/UnityProgress.js"></script>
+    <script src= {{ page.gameName }} + "/Build/UnityLoader.js"></script>
     <script>
-      var unityInstance = UnityLoader.instantiate("unityContainer", "Build/CircleGame.json", {onProgress: UnityProgress});
+      var unityInstance = UnityLoader.instantiate("unityContainer", {{ page.gameName }} + "/Build/" + {{ page.gameName }} + ".json", {onProgress: UnityProgress});
     </script>
   </head>
   <body>
@@ -46,7 +49,8 @@
     <main id="content" class="main-content" role="main">
       {{ content }}
 	  
-	  <p><a href="https://larry156.github.io">Return to Index.</p>
+	  <br>
+	  <p style="text-align: center"><a href="https://larry156.github.io">Return to Index.</p>
 
       <footer class="site-footer">
         {% if site.github.is_project_page %}
