@@ -1,0 +1,35 @@
+---
+---
+
+@import "{{ site.theme }}";
+
+.project-navbar {
+    margin-bottom: 2rem;
+    font-weight: normal;
+    opacity: 0.7;
+  
+    @include large {
+      font-size: 1.25rem;
+    }
+  
+    @include medium {
+      font-size: 1.15rem;
+    }
+  
+    @include small {
+      font-size: 1rem;
+    }
+
+    a:link {
+        color: skyblue;
+    }
+    a:visited {
+        color: turquoise;
+    }
+    a:hover {
+        color: white;
+    }
+    a:active {
+        color: lightcyan;
+    }
+}
