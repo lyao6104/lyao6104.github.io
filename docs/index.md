@@ -1,1 +1,1 @@
-It's happening
+[Home](index.html) | [Games](games.md)
