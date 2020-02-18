@@ -25,10 +25,7 @@
   <body>
     <header class="page-header" role="banner">
       <h1 class="project-name">{{ page.title | default: site.title | default: site.github.repository_name }}</h1>
-      <h2 class="project-navbar">
-        <!-- NAVBAR HERE -->
-        <a href="index.html">Home</a> | <a href="games.html">Games</a>
-      </h2>
+      {% include navbar.html %}
       {% if site.github.is_project_page %}
         <a href="{{ site.github.repository_url }}" class="btn">View on GitHub</a>
       {% endif %}
