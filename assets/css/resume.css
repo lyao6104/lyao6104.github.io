@@ -1,0 +1,8 @@
+/* Custom CSS for Resume */
+.link-anchor {
+    position: relative;
+    top : -64px;
+}
+.expandable-image {
+    cursor: pointer;
+}
