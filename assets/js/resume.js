@@ -5,10 +5,8 @@ $(document).ready(function () {
     var highlightOffsetVal = 96;
     var yPosSkills = $("#section-skills").offset().top - highlightOffsetVal;
     var yPosProjects = $("#section-projects").offset().top - highlightOffsetVal;
-    var yPosEducation = $("#section-education").offset().top - highlightOffsetVal;
-    var yPosExperience = $("#section-experience").offset().top - highlightOffsetVal;
     // Last section of the CV
-    var lastSectionBtn = $("#btn-experience");
+    var lastSectionBtn = $("#btn-projects");
 
     var modalVisible = false;
 
@@ -16,8 +14,6 @@ $(document).ready(function () {
     function setYPos() {
         yPosSkills = $("#section-skills").offset().top - highlightOffsetVal;
         yPosProjects = $("#section-projects").offset().top - highlightOffsetVal;
-        yPosEducation = $("#section-education").offset().top - highlightOffsetVal;
-        yPosExperience = $("#section-experience").offset().top - highlightOffsetVal;
     }
 
     // Hide elements if visible, otherwise show them.
@@ -90,14 +86,6 @@ $(document).ready(function () {
         else if ($(window).scrollTop() < yPosProjects) {
             $("#btn-skills").addClass("w3-theme");
             $("#btn-skills").removeClass("w3-theme-d3");
-        }
-        else if ($(window).scrollTop() < yPosEducation) {
-            $("#btn-projects").addClass("w3-theme");
-            $("#btn-projects").removeClass("w3-theme-d3");
-        }
-        else if ($(window).scrollTop() < yPosExperience) {
-            $("#btn-education").addClass("w3-theme");
-            $("#btn-education").removeClass("w3-theme-d3");
         }
         else {
             lastSectionBtn.addClass("w3-theme");
