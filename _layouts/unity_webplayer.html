@@ -22,13 +22,6 @@
     <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
     <link rel="stylesheet" href="{{ '/assets/css/style.css?v=' | append: site.github.build_revision | relative_url }}">
 	  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-    <link rel="shortcut icon" href="{{ page.gameName | append: "/TemplateData/favicon.ico" }}">
-    <link rel="stylesheet" href="{{ page.gameName | append: "/TemplateData/style.css" }}">
-    <script src="{{ page.gameName | append: "/TemplateData/UnityProgress.js" }}"></script>
-    <script src="{{ page.gameName | append: "/Build/UnityLoader.js" }}"></script>
-    <script>
-      var unityInstance = UnityLoader.instantiate("unityContainer", "{{ page.gameName }}" + "/Build/" + "{{ page.gameName}}" + ".json", {onProgress: UnityProgress});
-    </script>
   </head>
   <body>
     <header class="page-header" role="banner">
@@ -45,7 +38,24 @@
 
     <main id="content" class="main-content" role="main">
       <iframe style="width:1024px; height: 768px; border:none;">
-        {{ content }}
+        <html>
+          <head>
+            <meta charset="UTF-8">
+            <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+            <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+            <link rel="stylesheet" href="{{ '/assets/css/style.css?v=' | append: site.github.build_revision | relative_url }}">
+            <link rel="shortcut icon" href="{{ page.gameName | append: "/TemplateData/favicon.ico" }}">
+            <link rel="stylesheet" href="{{ page.gameName | append: "/TemplateData/style.css" }}">
+            <script src="{{ page.gameName | append: "/TemplateData/UnityProgress.js" }}"></script>
+            <script src="{{ page.gameName | append: "/Build/UnityLoader.js" }}"></script>
+            <script>
+              var unityInstance = UnityLoader.instantiate("unityContainer", "{{ page.gameName }}" + "/Build/" + "{{ page.gameName}}" + ".json", {onProgress: UnityProgress});
+            </script>
+          </head>
+          <body>
+            {{ content }}
+          </body>
+        </html>
       </iframe>
 
       <footer class="site-footer">
