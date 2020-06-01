@@ -65,3 +65,15 @@
   top : 0px;
   z-index: 1; /* For some reason text with the "w3-opacity" class kept showing through the navbar. This stops that from happening */
 }
+
+.unity-game {
+  border: 1px solid lightgray;
+  border-radius: 25px;
+  width: 1024px;
+  height: 768px;
+}
+
+.unity-container {
+  position: relative; 
+  left: -15%;
+}
