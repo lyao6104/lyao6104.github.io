@@ -60,10 +60,19 @@
 .w3-hover-border-theme:hover {border-color:#009688 !important}
 
 // Custom CSS
-.navbar-sticky {
-  position : fixed;
-  top : 0px;
-  z-index: 1; /* For some reason text with the "w3-opacity" class kept showing through the navbar. This stops that from happening */
+.navbar {
+  background-color: #0f4779; 
+  background-image: linear-gradient(0deg, #094347, #0f4779);
+
+  a:link {
+    background-color: #0f4779; 
+    background-image: linear-gradient(0deg, #094347, #0f4779);
+  }
+
+  a:hover {
+    background-color: #65a7e4; 
+    background-image: linear-gradient(0deg, #78c6cc, #65a7e4);
+  }
 }
 
 .unity-game {
