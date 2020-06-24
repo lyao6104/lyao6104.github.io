@@ -6851,6 +6851,7 @@ var $elm$core$Task$perform = F2(
 				A2($elm$core$Task$map, toMessage, task)));
 	});
 var $elm$browser$Browser$element = _Browser_element;
+var $author$project$BeeCharacterAlt$None = {$: 'None'};
 var $author$project$BeeCharacterAlt$Resize = F2(
 	function (a, b) {
 		return {$: 'Resize', a: a, b: b};
@@ -6878,6 +6879,11 @@ var $ianmackenzie$elm_units$Pixels$pixels = function (numPixels) {
 	return $ianmackenzie$elm_units$Quantity$Quantity(numPixels);
 };
 var $ianmackenzie$elm_units$Quantity$zero = $ianmackenzie$elm_units$Quantity$Quantity(0);
+var $ianmackenzie$elm_geometry$Geometry$Types$Vector3d = function (a) {
+	return {$: 'Vector3d', a: a};
+};
+var $ianmackenzie$elm_geometry$Vector3d$zero = $ianmackenzie$elm_geometry$Geometry$Types$Vector3d(
+	{x: 0, y: 0, z: 0});
 var $author$project$BeeCharacterAlt$init = function (_v0) {
 	return _Utils_Tuple2(
 		{
@@ -6885,11 +6891,18 @@ var $author$project$BeeCharacterAlt$init = function (_v0) {
 			beePos: $ianmackenzie$elm_geometry$Point3d$origin,
 			beeRot: $ianmackenzie$elm_units$Angle$degrees(0),
 			camPos: $ianmackenzie$elm_geometry$Point3d$origin,
+			dirFB: $author$project$BeeCharacterAlt$None,
+			dirLR: $author$project$BeeCharacterAlt$None,
+			dirUD: $author$project$BeeCharacterAlt$None,
 			elevation: $ianmackenzie$elm_units$Angle$degrees(30),
 			height: $ianmackenzie$elm_units$Quantity$zero,
+			movingFB: false,
+			movingLR: false,
+			movingUD: false,
 			orbiting: false,
+			rotVelocity: 0,
 			time: 0,
-			velocity: 0,
+			velocity: $ianmackenzie$elm_geometry$Vector3d$zero,
 			width: $ianmackenzie$elm_units$Quantity$zero
 		},
 		A2(
@@ -7554,6 +7567,12 @@ var $author$project$BeeCharacterAlt$subscriptions = function (model) {
 				$elm$json$Json$Decode$succeed($author$project$BeeCharacterAlt$MouseDown))
 			]));
 };
+var $author$project$BeeCharacterAlt$Backward = {$: 'Backward'};
+var $author$project$BeeCharacterAlt$Down = {$: 'Down'};
+var $author$project$BeeCharacterAlt$Forward = {$: 'Forward'};
+var $author$project$BeeCharacterAlt$Left = {$: 'Left'};
+var $author$project$BeeCharacterAlt$Right = {$: 'Right'};
+var $author$project$BeeCharacterAlt$Up = {$: 'Up'};
 var $ianmackenzie$elm_units$Quantity$at = F2(
 	function (_v0, _v1) {
 		var rate = _v0.a;
@@ -7579,6 +7598,87 @@ var $ianmackenzie$elm_units$Quantity$clamp = F3(
 			A3($elm$core$Basics$clamp, lower, upper, value)) : $ianmackenzie$elm_units$Quantity$Quantity(
 			A3($elm$core$Basics$clamp, upper, lower, value));
 	});
+var $ianmackenzie$elm_units$Quantity$plus = F2(
+	function (_v0, _v1) {
+		var y = _v0.a;
+		var x = _v1.a;
+		return $ianmackenzie$elm_units$Quantity$Quantity(x + y);
+	});
+var $ianmackenzie$elm_geometry$Geometry$Types$Direction3d = function (a) {
+	return {$: 'Direction3d', a: a};
+};
+var $elm$core$Basics$cos = _Basics_cos;
+var $elm$core$Basics$sin = _Basics_sin;
+var $ianmackenzie$elm_geometry$Direction3d$xyZ = F2(
+	function (_v0, _v1) {
+		var theta = _v0.a;
+		var phi = _v1.a;
+		var cosPhi = $elm$core$Basics$cos(phi);
+		return $ianmackenzie$elm_geometry$Geometry$Types$Direction3d(
+			{
+				x: cosPhi * $elm$core$Basics$cos(theta),
+				y: cosPhi * $elm$core$Basics$sin(theta),
+				z: $elm$core$Basics$sin(phi)
+			});
+	});
+var $author$project$BeeCharacterAlt$directionConverter = F2(
+	function (model, dir) {
+		var upDir = A2(
+			$ianmackenzie$elm_geometry$Direction3d$xyZ,
+			A2(
+				$ianmackenzie$elm_units$Quantity$plus,
+				$ianmackenzie$elm_units$Angle$degrees(270),
+				model.beeRot),
+			$ianmackenzie$elm_units$Angle$degrees(90));
+		var rightDir = A2(
+			$ianmackenzie$elm_geometry$Direction3d$xyZ,
+			A2(
+				$ianmackenzie$elm_units$Quantity$plus,
+				$ianmackenzie$elm_units$Angle$degrees(180),
+				model.beeRot),
+			$ianmackenzie$elm_units$Angle$degrees(0));
+		var leftDir = A2(
+			$ianmackenzie$elm_geometry$Direction3d$xyZ,
+			model.beeRot,
+			$ianmackenzie$elm_units$Angle$degrees(0));
+		var forwardDir = A2(
+			$ianmackenzie$elm_geometry$Direction3d$xyZ,
+			A2(
+				$ianmackenzie$elm_units$Quantity$plus,
+				$ianmackenzie$elm_units$Angle$degrees(270),
+				model.beeRot),
+			$ianmackenzie$elm_units$Angle$degrees(0));
+		var downDir = A2(
+			$ianmackenzie$elm_geometry$Direction3d$xyZ,
+			A2(
+				$ianmackenzie$elm_units$Quantity$plus,
+				$ianmackenzie$elm_units$Angle$degrees(270),
+				model.beeRot),
+			$ianmackenzie$elm_units$Angle$degrees(-90));
+		var backwardDir = A2(
+			$ianmackenzie$elm_geometry$Direction3d$xyZ,
+			A2(
+				$ianmackenzie$elm_units$Quantity$plus,
+				$ianmackenzie$elm_units$Angle$degrees(90),
+				model.beeRot),
+			$ianmackenzie$elm_units$Angle$degrees(0));
+		switch (dir.$) {
+			case 'Forward':
+				return forwardDir;
+			case 'Backward':
+				return backwardDir;
+			case 'Left':
+				return leftDir;
+			case 'Right':
+				return rightDir;
+			case 'Up':
+				return upDir;
+			case 'Down':
+				return downDir;
+			default:
+				return downDir;
+		}
+	});
 var $ianmackenzie$elm_units$Quantity$for = F2(
 	function (_v0, _v1) {
 		var independentValue = _v0.a;
@@ -7589,20 +7689,25 @@ var $ianmackenzie$elm_units$Duration$inSeconds = function (_v0) {
 	var numSeconds = _v0.a;
 	return numSeconds;
 };
-var $author$project$BeeCharacterAlt$speed = 2.0;
-var $author$project$BeeCharacterAlt$maxVelocity = $author$project$BeeCharacterAlt$speed * 2;
 var $ianmackenzie$elm_units$Duration$milliseconds = function (numMilliseconds) {
 	return $ianmackenzie$elm_units$Duration$seconds(0.001 * numMilliseconds);
 };
-var $author$project$BeeCharacterAlt$minVelocity = (-$author$project$BeeCharacterAlt$speed) * 2;
 var $ianmackenzie$elm_units$Quantity$minus = F2(
 	function (_v0, _v1) {
 		var y = _v0.a;
 		var x = _v1.a;
 		return $ianmackenzie$elm_units$Quantity$Quantity(x - y);
 	});
+var $ianmackenzie$elm_geometry$Vector3d$minus = F2(
+	function (_v0, _v1) {
+		var v2 = _v0.a;
+		var v1 = _v1.a;
+		return $ianmackenzie$elm_geometry$Geometry$Types$Vector3d(
+			{x: v1.x - v2.x, y: v1.y - v2.y, z: v1.z - v2.z});
+	});
 var $elm$core$Platform$Cmd$batch = _Platform_batch;
 var $elm$core$Platform$Cmd$none = $elm$core$Platform$Cmd$batch(_List_Nil);
+var $elm$core$Basics$not = _Basics_not;
 var $ianmackenzie$elm_units$Quantity$per = F2(
 	function (_v0, _v1) {
 		var independentValue = _v0.a;
@@ -7610,21 +7715,21 @@ var $ianmackenzie$elm_units$Quantity$per = F2(
 		return $ianmackenzie$elm_units$Quantity$Quantity(dependentValue / independentValue);
 	});
 var $ianmackenzie$elm_units$Pixels$pixel = $ianmackenzie$elm_units$Pixels$pixels(1);
-var $ianmackenzie$elm_units$Quantity$plus = F2(
+var $ianmackenzie$elm_geometry$Vector3d$plus = F2(
 	function (_v0, _v1) {
-		var y = _v0.a;
-		var x = _v1.a;
-		return $ianmackenzie$elm_units$Quantity$Quantity(x + y);
+		var v2 = _v0.a;
+		var v1 = _v1.a;
+		return $ianmackenzie$elm_geometry$Geometry$Types$Vector3d(
+			{x: v1.x + v2.x, y: v1.y + v2.y, z: v1.z + v2.z});
 	});
-var $author$project$BeeCharacterAlt$rotSpeed = 2;
+var $ianmackenzie$elm_geometry$Vector3d$scaleBy = F2(
+	function (k, _v0) {
+		var v = _v0.a;
+		return $ianmackenzie$elm_geometry$Geometry$Types$Vector3d(
+			{x: k * v.x, y: k * v.y, z: k * v.z});
+	});
 var $ianmackenzie$elm_units$Duration$second = $ianmackenzie$elm_units$Duration$seconds(1);
-var $author$project$BeeCharacterAlt$Backward = {$: 'Backward'};
-var $author$project$BeeCharacterAlt$Down = {$: 'Down'};
-var $author$project$BeeCharacterAlt$Forward = {$: 'Forward'};
-var $author$project$BeeCharacterAlt$Left = {$: 'Left'};
-var $author$project$BeeCharacterAlt$None = {$: 'None'};
-var $author$project$BeeCharacterAlt$Right = {$: 'Right'};
-var $author$project$BeeCharacterAlt$Up = {$: 'Up'};
+var $author$project$BeeCharacterAlt$speed = 1;
 var $author$project$BeeCharacterAlt$toDirection = function (string) {
 	switch (string) {
 		case 'ArrowLeft':
@@ -7653,6 +7758,13 @@ var $author$project$BeeCharacterAlt$toDirection = function (string) {
 			return $author$project$BeeCharacterAlt$None;
 	}
 };
+var $ianmackenzie$elm_geometry$Point3d$translateBy = F2(
+	function (_v0, _v1) {
+		var v = _v0.a;
+		var p = _v1.a;
+		return $ianmackenzie$elm_geometry$Geometry$Types$Point3d(
+			{x: p.x + v.x, y: p.y + v.y, z: p.z + v.z});
+	});
 var $ianmackenzie$elm_geometry$Point3d$translateIn = F3(
 	function (_v0, _v1, _v2) {
 		var d = _v0.a;
@@ -7661,22 +7773,12 @@ var $ianmackenzie$elm_geometry$Point3d$translateIn = F3(
 		return $ianmackenzie$elm_geometry$Geometry$Types$Point3d(
 			{x: p.x + (distance * d.x), y: p.y + (distance * d.y), z: p.z + (distance * d.z)});
 	});
-var $ianmackenzie$elm_geometry$Geometry$Types$Direction3d = function (a) {
-	return {$: 'Direction3d', a: a};
-};
-var $elm$core$Basics$cos = _Basics_cos;
-var $elm$core$Basics$sin = _Basics_sin;
-var $ianmackenzie$elm_geometry$Direction3d$xyZ = F2(
+var $ianmackenzie$elm_geometry$Vector3d$withLength = F2(
 	function (_v0, _v1) {
-		var theta = _v0.a;
-		var phi = _v1.a;
-		var cosPhi = $elm$core$Basics$cos(phi);
-		return $ianmackenzie$elm_geometry$Geometry$Types$Direction3d(
-			{
-				x: cosPhi * $elm$core$Basics$cos(theta),
-				y: cosPhi * $elm$core$Basics$sin(theta),
-				z: $elm$core$Basics$sin(phi)
-			});
+		var a = _v0.a;
+		var d = _v1.a;
+		return $ianmackenzie$elm_geometry$Geometry$Types$Vector3d(
+			{x: a * d.x, y: a * d.y, z: a * d.z});
 	});
 var $ianmackenzie$elm_geometry$Direction3d$unsafe = function (givenComponents) {
 	return $ianmackenzie$elm_geometry$Geometry$Types$Direction3d(givenComponents);
@@ -7706,28 +7808,44 @@ var $author$project$BeeCharacterAlt$update = F2(
 					A2($ianmackenzie$elm_units$Quantity$for, t, tickRate),
 					$ianmackenzie$elm_units$Duration$seconds(model.time));
 				var timeAsNum = $ianmackenzie$elm_units$Duration$inSeconds(updatedTime);
+				var newBeePos = A2($ianmackenzie$elm_geometry$Point3d$translateBy, model.velocity, model.beePos);
 				return _Utils_Tuple2(
 					_Utils_update(
 						model,
 						{
-							beePos: A3(
-								$ianmackenzie$elm_geometry$Point3d$translateIn,
-								A2(
-									$ianmackenzie$elm_geometry$Direction3d$xyZ,
-									A2(
-										$ianmackenzie$elm_units$Quantity$plus,
-										$ianmackenzie$elm_units$Angle$degrees(270),
-										model.beeRot),
-									$ianmackenzie$elm_units$Angle$degrees(0)),
-								$ianmackenzie$elm_units$Length$centimeters(model.velocity),
-								model.beePos),
+							beePos: newBeePos,
+							beeRot: A2(
+								$ianmackenzie$elm_units$Quantity$plus,
+								$ianmackenzie$elm_units$Angle$degrees(model.rotVelocity),
+								model.beeRot),
 							camPos: A3(
 								$ianmackenzie$elm_geometry$Point3d$translateIn,
 								$ianmackenzie$elm_geometry$Direction3d$z,
 								$ianmackenzie$elm_units$Length$centimeters(30),
-								model.beePos),
+								newBeePos),
 							time: timeAsNum,
-							velocity: A3($elm$core$Basics$clamp, $author$project$BeeCharacterAlt$minVelocity, $author$project$BeeCharacterAlt$maxVelocity, model.velocity)
+							velocity: A2(
+								$ianmackenzie$elm_geometry$Vector3d$minus,
+								A2($ianmackenzie$elm_geometry$Vector3d$scaleBy, 0.1, model.velocity),
+								A2(
+									$ianmackenzie$elm_geometry$Vector3d$plus,
+									(!_Utils_eq(model.dirUD, $author$project$BeeCharacterAlt$None)) ? A2(
+										$ianmackenzie$elm_geometry$Vector3d$withLength,
+										$ianmackenzie$elm_units$Length$centimeters($author$project$BeeCharacterAlt$speed),
+										A2($author$project$BeeCharacterAlt$directionConverter, model, model.dirUD)) : $ianmackenzie$elm_geometry$Vector3d$zero,
+									A2(
+										$ianmackenzie$elm_geometry$Vector3d$plus,
+										(!_Utils_eq(model.dirLR, $author$project$BeeCharacterAlt$None)) ? A2(
+											$ianmackenzie$elm_geometry$Vector3d$withLength,
+											$ianmackenzie$elm_units$Length$centimeters($author$project$BeeCharacterAlt$speed),
+											A2($author$project$BeeCharacterAlt$directionConverter, model, model.dirLR)) : $ianmackenzie$elm_geometry$Vector3d$zero,
+										A2(
+											$ianmackenzie$elm_geometry$Vector3d$plus,
+											(!_Utils_eq(model.dirFB, $author$project$BeeCharacterAlt$None)) ? A2(
+												$ianmackenzie$elm_geometry$Vector3d$withLength,
+												$ianmackenzie$elm_units$Length$centimeters($author$project$BeeCharacterAlt$speed),
+												A2($author$project$BeeCharacterAlt$directionConverter, model, model.dirFB)) : $ianmackenzie$elm_geometry$Vector3d$zero,
+											model.velocity))))
 						}),
 					$elm$core$Platform$Cmd$none);
 			case 'MouseDown':
@@ -7777,24 +7895,149 @@ var $author$project$BeeCharacterAlt$update = F2(
 					return _Utils_Tuple2(
 						_Utils_update(
 							model,
-							{azimuth: newAzimuth, elevation: newElevation, orbiting: true}),
+							{azimuth: newAzimuth, beeRot: newAzimuth, elevation: newElevation, movingFB: false, movingLR: false, movingUD: false, orbiting: true}),
 						$elm$core$Platform$Cmd$none);
 				} else {
 					return _Utils_Tuple2(model, $elm$core$Platform$Cmd$none);
 				}
 			case 'KeyDown':
 				var key = message.a;
+				var upDir = A2(
+					$ianmackenzie$elm_geometry$Direction3d$xyZ,
+					A2(
+						$ianmackenzie$elm_units$Quantity$plus,
+						$ianmackenzie$elm_units$Angle$degrees(270),
+						model.beeRot),
+					$ianmackenzie$elm_units$Angle$degrees(90));
+				var rightDir = A2(
+					$ianmackenzie$elm_geometry$Direction3d$xyZ,
+					A2(
+						$ianmackenzie$elm_units$Quantity$plus,
+						$ianmackenzie$elm_units$Angle$degrees(180),
+						model.beeRot),
+					$ianmackenzie$elm_units$Angle$degrees(0));
+				var leftDir = A2(
+					$ianmackenzie$elm_geometry$Direction3d$xyZ,
+					model.beeRot,
+					$ianmackenzie$elm_units$Angle$degrees(0));
+				var forwardDir = A2(
+					$ianmackenzie$elm_geometry$Direction3d$xyZ,
+					A2(
+						$ianmackenzie$elm_units$Quantity$plus,
+						$ianmackenzie$elm_units$Angle$degrees(270),
+						model.beeRot),
+					$ianmackenzie$elm_units$Angle$degrees(0));
+				var downDir = A2(
+					$ianmackenzie$elm_geometry$Direction3d$xyZ,
+					A2(
+						$ianmackenzie$elm_units$Quantity$plus,
+						$ianmackenzie$elm_units$Angle$degrees(270),
+						model.beeRot),
+					$ianmackenzie$elm_units$Angle$degrees(-90));
 				var dir = $author$project$BeeCharacterAlt$toDirection(key);
+				var backwardDir = A2(
+					$ianmackenzie$elm_geometry$Direction3d$xyZ,
+					A2(
+						$ianmackenzie$elm_units$Quantity$plus,
+						$ianmackenzie$elm_units$Angle$degrees(90),
+						model.beeRot),
+					$ianmackenzie$elm_units$Angle$degrees(0));
+				switch (dir.$) {
+					case 'Left':
+						return _Utils_Tuple2(
+							_Utils_update(
+								model,
+								{dirLR: $author$project$BeeCharacterAlt$Left}),
+							$elm$core$Platform$Cmd$none);
+					case 'Right':
+						return _Utils_Tuple2(
+							_Utils_update(
+								model,
+								{dirLR: $author$project$BeeCharacterAlt$Right}),
+							$elm$core$Platform$Cmd$none);
+					case 'Forward':
+						return _Utils_Tuple2(
+							_Utils_update(
+								model,
+								{dirFB: $author$project$BeeCharacterAlt$Forward}),
+							$elm$core$Platform$Cmd$none);
+					case 'Backward':
+						return _Utils_Tuple2(
+							_Utils_update(
+								model,
+								{dirFB: $author$project$BeeCharacterAlt$Backward}),
+							$elm$core$Platform$Cmd$none);
+					case 'Up':
+						return _Utils_Tuple2(
+							_Utils_update(
+								model,
+								{dirUD: $author$project$BeeCharacterAlt$Up}),
+							$elm$core$Platform$Cmd$none);
+					case 'Down':
+						return _Utils_Tuple2(
+							_Utils_update(
+								model,
+								{dirUD: $author$project$BeeCharacterAlt$Down}),
+							$elm$core$Platform$Cmd$none);
+					default:
+						return _Utils_Tuple2(model, $elm$core$Platform$Cmd$none);
+				}
+			default:
+				var key = message.a;
+				var upDir = A2(
+					$ianmackenzie$elm_geometry$Direction3d$xyZ,
+					A2(
+						$ianmackenzie$elm_units$Quantity$plus,
+						$ianmackenzie$elm_units$Angle$degrees(270),
+						model.beeRot),
+					$ianmackenzie$elm_units$Angle$degrees(90));
+				var rightDir = A2(
+					$ianmackenzie$elm_geometry$Direction3d$xyZ,
+					A2(
+						$ianmackenzie$elm_units$Quantity$plus,
+						$ianmackenzie$elm_units$Angle$degrees(180),
+						model.beeRot),
+					$ianmackenzie$elm_units$Angle$degrees(0));
+				var leftDir = A2(
+					$ianmackenzie$elm_geometry$Direction3d$xyZ,
+					model.beeRot,
+					$ianmackenzie$elm_units$Angle$degrees(0));
+				var forwardDir = A2(
+					$ianmackenzie$elm_geometry$Direction3d$xyZ,
+					A2(
+						$ianmackenzie$elm_units$Quantity$plus,
+						$ianmackenzie$elm_units$Angle$degrees(270),
+						model.beeRot),
+					$ianmackenzie$elm_units$Angle$degrees(0));
+				var downDir = A2(
+					$ianmackenzie$elm_geometry$Direction3d$xyZ,
+					A2(
+						$ianmackenzie$elm_units$Quantity$plus,
+						$ianmackenzie$elm_units$Angle$degrees(270),
+						model.beeRot),
+					$ianmackenzie$elm_units$Angle$degrees(-90));
+				var dir = $author$project$BeeCharacterAlt$toDirection(key);
+				var backwardDir = A2(
+					$ianmackenzie$elm_geometry$Direction3d$xyZ,
+					A2(
+						$ianmackenzie$elm_units$Quantity$plus,
+						$ianmackenzie$elm_units$Angle$degrees(90),
+						model.beeRot),
+					$ianmackenzie$elm_units$Angle$degrees(0));
 				switch (dir.$) {
 					case 'Left':
 						return _Utils_Tuple2(
 							_Utils_update(
 								model,
 								{
-									beeRot: A2(
-										$ianmackenzie$elm_units$Quantity$plus,
-										$ianmackenzie$elm_units$Angle$degrees($author$project$BeeCharacterAlt$rotSpeed),
-										model.beeRot)
+									dirLR: $author$project$BeeCharacterAlt$None,
+									velocity: A2(
+										$ianmackenzie$elm_geometry$Vector3d$minus,
+										A2(
+											$ianmackenzie$elm_geometry$Vector3d$withLength,
+											$ianmackenzie$elm_units$Length$centimeters($author$project$BeeCharacterAlt$speed),
+											leftDir),
+										model.velocity)
 								}),
 							$elm$core$Platform$Cmd$none);
 					case 'Right':
@@ -7802,29 +8045,79 @@ var $author$project$BeeCharacterAlt$update = F2(
 							_Utils_update(
 								model,
 								{
-									beeRot: A2(
-										$ianmackenzie$elm_units$Quantity$plus,
-										$ianmackenzie$elm_units$Angle$degrees(-$author$project$BeeCharacterAlt$rotSpeed),
-										model.beeRot)
+									dirLR: $author$project$BeeCharacterAlt$None,
+									velocity: A2(
+										$ianmackenzie$elm_geometry$Vector3d$minus,
+										A2(
+											$ianmackenzie$elm_geometry$Vector3d$withLength,
+											$ianmackenzie$elm_units$Length$centimeters($author$project$BeeCharacterAlt$speed),
+											rightDir),
+										model.velocity)
 								}),
 							$elm$core$Platform$Cmd$none);
 					case 'Forward':
 						return _Utils_Tuple2(
 							_Utils_update(
 								model,
-								{velocity: model.velocity + $author$project$BeeCharacterAlt$speed}),
+								{
+									dirFB: $author$project$BeeCharacterAlt$None,
+									velocity: A2(
+										$ianmackenzie$elm_geometry$Vector3d$minus,
+										A2(
+											$ianmackenzie$elm_geometry$Vector3d$withLength,
+											$ianmackenzie$elm_units$Length$centimeters($author$project$BeeCharacterAlt$speed),
+											forwardDir),
+										model.velocity)
+								}),
 							$elm$core$Platform$Cmd$none);
 					case 'Backward':
 						return _Utils_Tuple2(
 							_Utils_update(
 								model,
-								{velocity: model.velocity - $author$project$BeeCharacterAlt$speed}),
+								{
+									dirFB: $author$project$BeeCharacterAlt$None,
+									velocity: A2(
+										$ianmackenzie$elm_geometry$Vector3d$minus,
+										A2(
+											$ianmackenzie$elm_geometry$Vector3d$withLength,
+											$ianmackenzie$elm_units$Length$centimeters($author$project$BeeCharacterAlt$speed),
+											backwardDir),
+										model.velocity)
+								}),
+							$elm$core$Platform$Cmd$none);
+					case 'Up':
+						return _Utils_Tuple2(
+							_Utils_update(
+								model,
+								{
+									dirUD: $author$project$BeeCharacterAlt$None,
+									velocity: A2(
+										$ianmackenzie$elm_geometry$Vector3d$minus,
+										A2(
+											$ianmackenzie$elm_geometry$Vector3d$withLength,
+											$ianmackenzie$elm_units$Length$centimeters($author$project$BeeCharacterAlt$speed),
+											upDir),
+										model.velocity)
+								}),
+							$elm$core$Platform$Cmd$none);
+					case 'Down':
+						return _Utils_Tuple2(
+							_Utils_update(
+								model,
+								{
+									dirUD: $author$project$BeeCharacterAlt$None,
+									velocity: A2(
+										$ianmackenzie$elm_geometry$Vector3d$minus,
+										A2(
+											$ianmackenzie$elm_geometry$Vector3d$withLength,
+											$ianmackenzie$elm_units$Length$centimeters($author$project$BeeCharacterAlt$speed),
+											downDir),
+										model.velocity)
+								}),
 							$elm$core$Platform$Cmd$none);
 					default:
 						return _Utils_Tuple2(model, $elm$core$Platform$Cmd$none);
 				}
-			default:
-				return _Utils_Tuple2(model, $elm$core$Platform$Cmd$none);
 		}
 	});
 var $author$project$Scene3d$BackgroundColor = function (a) {
@@ -7860,9 +8153,6 @@ var $ianmackenzie$elm_geometry$Point3d$centimeters = F3(
 			$ianmackenzie$elm_units$Length$centimeters(y),
 			$ianmackenzie$elm_units$Length$centimeters(z));
 	});
-var $ianmackenzie$elm_geometry$Geometry$Types$Vector3d = function (a) {
-	return {$: 'Vector3d', a: a};
-};
 var $ianmackenzie$elm_geometry$Vector3d$xyz = F3(
 	function (_v0, _v1, _v2) {
 		var x = _v0.a;
@@ -8292,8 +8582,6 @@ var $ianmackenzie$elm_triangular_mesh$TriangularMesh$triangles = function (faceV
 var $ianmackenzie$elm_units$Angle$turns = function (numTurns) {
 	return $ianmackenzie$elm_units$Angle$radians((2 * $elm$core$Basics$pi) * numTurns);
 };
-var $ianmackenzie$elm_geometry$Vector3d$zero = $ianmackenzie$elm_geometry$Geometry$Types$Vector3d(
-	{x: 0, y: 0, z: 0});
 var $author$project$Scene3d$Primitives$cone = function () {
 	var topZ = $ianmackenzie$elm_units$Length$meters(1);
 	var tipPoint = A3($ianmackenzie$elm_geometry$Point3d$xyz, $ianmackenzie$elm_units$Quantity$zero, $ianmackenzie$elm_units$Quantity$zero, topZ);
@@ -8541,7 +8829,6 @@ var $elm$core$List$any = F2(
 			}
 		}
 	});
-var $elm$core$Basics$not = _Basics_not;
 var $elm$core$List$all = F2(
 	function (isOkay, list) {
 		return !A2(
@@ -12661,13 +12948,6 @@ var $ianmackenzie$elm_geometry$Frame3d$rotateAroundOwn = F3(
 			angle,
 			frame);
 	});
-var $ianmackenzie$elm_geometry$Point3d$translateBy = F2(
-	function (_v0, _v1) {
-		var v = _v0.a;
-		var p = _v1.a;
-		return $ianmackenzie$elm_geometry$Geometry$Types$Point3d(
-			{x: p.x + v.x, y: p.y + v.y, z: p.z + v.z});
-	});
 var $ianmackenzie$elm_geometry$Frame3d$translateBy = F2(
 	function (vector, frame) {
 		return $ianmackenzie$elm_geometry$Frame3d$unsafe(
@@ -12680,13 +12960,6 @@ var $ianmackenzie$elm_geometry$Frame3d$translateBy = F2(
 				yDirection: $ianmackenzie$elm_geometry$Frame3d$yDirection(frame),
 				zDirection: $ianmackenzie$elm_geometry$Frame3d$zDirection(frame)
 			});
-	});
-var $ianmackenzie$elm_geometry$Vector3d$withLength = F2(
-	function (_v0, _v1) {
-		var a = _v0.a;
-		var d = _v1.a;
-		return $ianmackenzie$elm_geometry$Geometry$Types$Vector3d(
-			{x: a * d.x, y: a * d.y, z: a * d.z});
 	});
 var $ianmackenzie$elm_geometry$Frame3d$translateIn = F3(
 	function (direction, distance, frame) {
