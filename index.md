@@ -6,4 +6,6 @@ title: Larry Yao
 
 There isn't a lot here right now; this site is still under construction.
 
-You can play the dev version of CircleGame [here.](Games/CircleGame.html)
+My name is Larry Yao, and I am currently an undergraduate student studying Computer Science.
+
+Right now, you can check out a few of my released projects on this site in the Games tab, as well as my Resume.
