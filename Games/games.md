@@ -1,5 +1,5 @@
 ---
-title: Luna Y
+title: Welcome to the Moon
 permalink: /:basename
 ---
 
