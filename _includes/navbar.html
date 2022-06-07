@@ -1,14 +1,7 @@
-<div class="w3-theme-d3 w3-bar w3-card navbar" id="navBar">
-    <a class="w3-theme-d3 w3-bar-item w3-button round-button navbar" id="btn-home" href="/index.html">
-        Home
-    </a>
-    <a class="w3-theme-d3 w3-bar-item w3-button round-button navbar" id="btn-games" href="/games.html">
-        Games
-    </a>
-    <a class="w3-theme-d3 w3-bar-item w3-button round-button navbar" id="btn-projects" href="/projects.html">
-        Projects
-    </a>
-    <a class="w3-theme-d3 w3-bar-item w3-button round-button navbar" id="btn-textures" href="/textures.html">
-        Textures
-    </a>
-</div>
+<nav class="w3-theme-d3 w3-bar w3-card navbar" id="navBar">
+    {% for item in site.data.navigation %}
+        <a class="w3-theme-d3 w3-bar-item w3-button round-button navbar" id="btn-{{ item.id }}" href="{{ item.path }}">
+            {{ item.name }}
+        </a>
+    {% endfor %}
+</nav>
