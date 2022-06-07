@@ -1,0 +1,12 @@
+- name: Home
+  path: /
+  id: home
+- name: Games
+  path: /games.html
+  id: games
+- name: Projects
+  path: /projects.html
+  id: projects
+- name: Textures
+  path: /textures.html
+  id: textures
