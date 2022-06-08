@@ -154,3 +154,11 @@ $section-headings-color: #4b55e0;
   position: relative;
   left: -15%;
 }
+
+.card {
+  // border: 1px solid white;
+  border-radius: 32px;
+  padding: 24px;
+  margin-top: 24px;
+  box-shadow: 4px 4px 16px -8px;
+}

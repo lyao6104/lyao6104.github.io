@@ -1,0 +1,29 @@
+---
+title: Welcome to the Moon
+layout: default
+---
+
+{% assign welcome_post = site.tags.SiteIntroduction.last %}
+
+<h2>{{ welcome_post.postName }}</h2>
+
+<div class="card">
+    {{ welcome_post.content }}
+</div>
+
+<h2>Latest Posts</h2>
+
+{% for post in site.posts %}
+    {% unless post.tags contains "SiteIntroduction" %}
+        <!-- Necessary to limit posts shown properly due to excluding introductions -->
+        <!-- {% increment seen_posts %} -->
+        <div class="card">
+            <h3><a href="{{ post.url }}">{{ post.postName }}</a></h2>
+            {{ post.excerpt }}
+            <b>{{post.date | date_to_string: "ordinal" }}</b>
+        </div>
+    {% endunless %}
+{% endfor %}
+{% unless seen_posts > 0 %}
+    <p>No blog posts found.</p>
+{% endunless %}

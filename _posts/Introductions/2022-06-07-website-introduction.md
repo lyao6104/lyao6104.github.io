@@ -1,8 +1,11 @@
 ---
+layout: post
+author: Luna Y
 title: Welcome to the Moon
+postName: Website Introduction
+tags:
+    - SiteIntroduction
 ---
-
-## Website Introduction
 
 It looks like you've somehow stumbled onto my little corner of the Internet.
 My name is Luna, and I am currently an undergraduate student studying Computer Science.
