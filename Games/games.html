@@ -1,0 +1,20 @@
+---
+title: Welcome to the Moon
+layout: default
+permalink: /:basename
+---
+
+<h2>Games</h2>
+
+<p>This page is a showcase of all the games that I have made.</p>
+
+{% assign games = site.posts | where_exp: "item", "item.tags contains 'Games'" %}
+{% for post in games %}
+    <div class="card">
+        <h2><a href="{{ post.url }}">{{ post.postName }}</a></h2>
+        {{ post.content }}
+        <b>{{post.date | date_to_string: "ordinal" }}</b>
+    </div>
+{% else %}
+    <p>No blog posts found.</p>
+{% endfor %}
