@@ -3,3 +3,6 @@ POST_NAME = new-post
 
 new_post:
 	cp ./_utils/blog_template.md "_posts/$(CUR_DATE)-$(POST_NAME).md"
+
+run:
+	bundle exec jekyll serve
