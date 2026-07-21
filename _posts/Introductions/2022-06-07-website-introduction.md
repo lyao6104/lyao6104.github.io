@@ -8,7 +8,8 @@ tags:
 ---
 
 It looks like you've somehow stumbled onto my little corner of the Internet.
-My name is Luna, and I am currently an undergraduate student studying Computer Science.
+My name is Luna, and I am a software developer with over 3 years of industry experience.
+My skills mostly focus on backend, but I do have some frontend knowledge as well.
 
 I do all sorts of technology-related things, but on this website, you can find overviews of any games, large programming projects,
 or 2D textures I have made known to the public. For the most part, project pages will have links to their respective GitHub repositories,
