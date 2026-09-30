@@ -6,7 +6,7 @@ permalink: /:basename
 
 <h2>Games</h2>
 
-<p>This page is a showcase of all the games that I have made.</p>
+<p>This page is a showcase of all the standalone games that I have made, that aren't part of any larger projects.</p>
 
 {% assign games = site.posts | where_exp: "item", "item.tags contains 'Games'" %}
 {% for post in games %}
