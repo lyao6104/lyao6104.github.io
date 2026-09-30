@@ -7,7 +7,8 @@ permalink: /:basename
 <h2>Projects</h2>
 
 <p>This page is a list of all the blog posts that consist of me talking about various projects
-I've either authored or made major contributions to. While I </p>
+I've either authored or made major contributions to. This does not include "posts" that purely
+consist of a playable embed.</p>
 
 {% assign projects = site.posts | where_exp: "item", "item.tags contains 'Projects'" %}
 {% for post in projects %}
