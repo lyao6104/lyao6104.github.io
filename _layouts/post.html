@@ -23,6 +23,9 @@ layout: default
 
 {% assign seen_posts = 0 %}
 {% for post in site.related_posts %}
+    {% if seen_posts > 2 %}
+        {% break %}
+    {% endif %}
     {% unless post.tags contains "SiteIntroduction" %}
         <!-- Here this is just used to flag whether posts were seen -->
         {% assign seen_posts = seen_posts | plus: 1 %}
