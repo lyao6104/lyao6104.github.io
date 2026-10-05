@@ -3,6 +3,7 @@ description: The GitHub Pages site for lyao6104.
 domain: lyao6104.github.io
 baseurl: ""
 url: "https://lyao6104.github.io"
+repository: "lyao6104/lyao6104.github.io"
 
 theme: jekyll-theme-cayman
 plugins:
