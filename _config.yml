@@ -2,5 +2,15 @@ theme: jekyll-theme-cayman
 title: lyao6104's Website
 description: The GitHub Pages site for lyao6104.
 exclude:
+  - .sass-cache/
+  - .jekyll-cache/
+  - gemfiles/
+  - Gemfile
+  - Gemfile.lock
+  - node_modules/
+  - vendor/bundle/
+  - vendor/cache/
+  - vendor/gems/
+  - vendor/ruby/
   - Makefile
   - _utils
