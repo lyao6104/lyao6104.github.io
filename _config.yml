@@ -1,6 +1,30 @@
-theme: jekyll-theme-cayman
 title: lyao6104's Website
 description: The GitHub Pages site for lyao6104.
+domain: lyao6104.github.io
+baseurl: ""
+url: "https://lyao6104.github.io"
+
+theme: jekyll-theme-cayman
+plugins:
+  - jekyll-feed
+  - jekyll-avatar
+  - jekyll-coffeescript
+  - jekyll-commonmark
+  - jekyll-default-layout
+  - jekyll-gist
+  - jekyll-github-metadata
+  - jekyll-include-cache
+  - jekyll-mentions
+  - jekyll-optional-front-matter
+  - jekyll-paginate
+  - jekyll-readme-index
+  - jekyll-redirect-from
+  - jekyll-relative-links
+  - jekyll-sass-converter
+  - jekyll-seo-tag
+  - jekyll-sitemap
+  - jekyll-titles-from-headings
+
 exclude:
   - .sass-cache/
   - .jekyll-cache/
